@@ -1,16 +1,8 @@
 'use client';
 
 import { animals } from '@/data/animals';
-import { CatSVG, DogSVG, ElephantSVG, BunnySVG, LionSVG } from '@/components/AnimalSVGs';
+import { ColoringPage } from '@/components/ColoringPage';
 import { useDownloadPDF } from '@/hooks/useDownloadPDF';
-
-const svgMap: Record<string, React.ComponentType<{ nameEn: string; nameRu: string }>> = {
-  cat: CatSVG,
-  dog: DogSVG,
-  elephant: ElephantSVG,
-  bunny: BunnySVG,
-  lion: LionSVG,
-};
 
 export default function Home() {
   const { downloadPDF, isGenerating } = useDownloadPDF();
@@ -53,24 +45,9 @@ export default function Home() {
           Preview the Pack / Предварительный просмотр
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {animals.map((animal) => {
-            const SVGComponent = svgMap[animal.id];
-            return (
-              <div
-                key={animal.id}
-                className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-              >
-                <div id={`animal-page-${animal.id}`} className="w-full">
-                  <SVGComponent nameEn={animal.nameEn} nameRu={animal.nameRu} />
-                </div>
-                <div className="p-3 text-center border-t border-gray-100">
-                  <span className="text-orange-500 font-semibold">{animal.nameEn}</span>
-                  <span className="text-gray-400 mx-2">/</span>
-                  <span className="text-blue-500 font-semibold">{animal.nameRu}</span>
-                </div>
-              </div>
-            );
-          })}
+          {animals.map((animal) => (
+            <ColoringPage key={animal.id} animal={animal} />
+          ))}
         </div>
       </section>
 
